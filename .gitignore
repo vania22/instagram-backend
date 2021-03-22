@@ -5,4 +5,4 @@ dist/
 .error
 .idea/
 .vscode/
-public/**/**
+/server/public/postImages/**

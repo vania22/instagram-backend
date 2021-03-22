@@ -13,16 +13,18 @@ export class CommentResolver {
         @Ctx() {user}: IContext): Promise<Post> {
         let post;
         try {
-            post = await Post.findOneOrFail({id: postId})
+            post = await Post.findOneOrFail({id: postId}, {relations: ['comments', 'comments.user']})
         } catch (e) {
             console.log(e)
             throw new Error('Post not found')
         }
 
-        await Comment.create({user, post, text}).save()
+       const comment =  await Comment.create({user, post, text});
+        await comment.save()
+        await post.reload()
 
         return {
-            ...post, commentsCount: post.commentsCount() + 1
+            ...post, commentsCount: post.commentsCount() + 1, comments: [...post.comments, comment]
         } as any
     }
 }

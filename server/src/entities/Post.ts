@@ -29,7 +29,7 @@ export class Post extends BaseEntity {
 
     @Field(() => [Comment], {nullable: "items"})
     @OneToMany(() => Comment, comment => comment.post)
-    comments: Like[]
+    comments: Comment[]
 
     @Expose()
     @Field(() => Int)

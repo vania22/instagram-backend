@@ -24,7 +24,7 @@ export class Comment extends BaseEntity {
     likes: Like[]
 
     @Field(() => [Post], {nullable: "items"})
-    @OneToMany(() => Post, post => post.comments)
+    @ManyToOne(() => Post, post => post.comments)
     post: Post
 
     @Expose()

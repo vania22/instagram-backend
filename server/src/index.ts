@@ -21,7 +21,7 @@ import {CommentResolver} from "./resolvers/CommentResolver";
 
     app.use(cors({origin: 'http://localhost:3000', credentials: true}))
     app.use(cookieParser())
-    app.use(graphqlUploadExpress({maxFileSize: 100000000, maxFiles: 1}))
+    app.use(graphqlUploadExpress({maxFileSize: 5000000, maxFiles: 1}))
     app.use(refreshTokenRouter)
     app.use(express.static('public'))
 
