@@ -6,7 +6,7 @@
    "password": "admin",
    "database": "instagram",
    "synchronize": true,
-   "logging": true,
+   "logging": false,
    "entities": [
       "src/entities/**/*.ts"
    ],

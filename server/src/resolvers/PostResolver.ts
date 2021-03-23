@@ -15,13 +15,16 @@ export class PostResolver {
         @Arg('description') description: string,
         @Ctx() {user}: IContext): Promise<Post> {
 
-        console.log(image)
-
         // @ts-ignore
         const {createReadStream, filename} = await image.promise!;
         const filenameToSave = Date.now() + filename
-        await createReadStream()
-            .pipe(fs.createWriteStream(path.join(__dirname, "../../public/postImages", filenameToSave)))
+        try {
+            await createReadStream()
+                .pipe(fs.createWriteStream(path.join(__dirname, "../../public/postImages", filenameToSave)))
+        }catch (e) {
+            throw new Error('File is too large, or in inappropriate format')
+        }
+
 
         try {
             const post = await Post.create({
