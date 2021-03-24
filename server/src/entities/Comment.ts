@@ -14,7 +14,10 @@ export class Comment extends BaseEntity {
     @ManyToOne(() => User, user => user.comments)
     user: User;
 
-    @Field(() => String, {nullable: false, })
+    @Column()
+    userId: number;
+
+    @Field(() => String, {nullable: false})
     @Column()
     @MaxLength(256)
     text: string
@@ -23,13 +26,14 @@ export class Comment extends BaseEntity {
     @OneToMany(() => Like, like => like.comment)
     likes: Like[]
 
-    @Field(() => [Post], {nullable: "items"})
+    @Field(() => Post)
     @ManyToOne(() => Post, post => post.comments)
     post: Post
 
+    @Column()
+    postId: number;
+
     @Expose()
     @Field(() => Int)
-    likesCount (): number {
-        return this.likes?.length
-    }
+    likesCount: number;
 }

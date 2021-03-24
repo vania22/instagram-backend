@@ -1,5 +1,5 @@
 import {BaseEntity} from "./BaseEntity";
-import {Entity, ManyToOne} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne} from "typeorm";
 import {User} from "./User";
 import {Post} from "./Post";
 import {Comment} from "./Comment";
@@ -12,11 +12,21 @@ export class Like extends BaseEntity {
     @ManyToOne(() => User, user => user.likes)
     user: User;
 
-    @Field(() => Post)
+    @Field(() => Post, {nullable: true})
     @ManyToOne(() => Post, post => post.likes)
+    @JoinColumn()
     post: Post;
 
-    @Field(() => Comment)
+    @Field(() => Comment, {nullable: true})
     @ManyToOne(() => Comment, comment => comment.likes)
     comment: Comment;
+
+    @Column()
+    userId: number;
+
+    @Column({nullable: true})
+    postId: number;
+
+    @Column({nullable: true})
+    commentId: number;
 }

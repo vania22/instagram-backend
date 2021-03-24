@@ -14,6 +14,9 @@ export class Post extends BaseEntity {
     @ManyToOne(() => User, user => user.posts)
     user: User;
 
+    @Column()
+    userId: number;
+
     @Field(() => String)
     @Column()
     @MaxLength(256)
@@ -33,13 +36,9 @@ export class Post extends BaseEntity {
 
     @Expose()
     @Field(() => Int)
-    likesCount (): number {
-        return this.likes?.length
-    }
+    likesCount:number
 
     @Expose()
     @Field(() => Int)
-    commentsCount (): number {
-        return this.comments?.length
-    }
+    commentsCount:number
 }
