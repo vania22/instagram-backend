@@ -15,7 +15,7 @@ export class Comment extends BaseEntity {
     user: User;
 
     @Column()
-    userId: number;
+    userId: string;
 
     @Field(() => String, {nullable: false})
     @Column()
@@ -31,7 +31,7 @@ export class Comment extends BaseEntity {
     post: Post
 
     @Column()
-    postId: number;
+    postId: string;
 
     @Expose()
     @Field(() => Int)

@@ -31,7 +31,7 @@ export const registrate = async (email: string, password: string, username: stri
 }
 
 export const login = async (username: string, password: string, res: Response): Promise<LoginResponse> => {
-    const user = await User.findOne({username}, )
+    const user = await User.findOne({username})
 
     if (!user) {
         throw new Error('Invalid login details')

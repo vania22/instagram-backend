@@ -34,7 +34,7 @@ export class UserResolver {
     @Authorized()
     @Query(() => User)
     async me(@Ctx() {user}: IContext): Promise<User> {
-        if(!user) throw new Error('User not found')
+        if (!user) throw new Error('User not found')
         return user
     }
 

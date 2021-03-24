@@ -22,11 +22,11 @@ export class Like extends BaseEntity {
     comment: Comment;
 
     @Column()
-    userId: number;
+    userId: string;
 
     @Column({nullable: true})
-    postId: number;
+    postId: string;
 
     @Column({nullable: true})
-    commentId: number;
+    commentId: string;
 }

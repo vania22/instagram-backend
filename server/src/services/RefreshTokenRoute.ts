@@ -11,7 +11,7 @@ refreshTokenRouter.post('/refresh_token', async (req: Request, res: Response) =>
         const decodedToken: any = verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!)
         const user = await User.findOne({id: decodedToken.userId})
 
-        if(user) {
+        if (user) {
             addRefreshTokenToCookie(res, user)
             return res.json({accessToken: newAccessToken(user)})
         } else {

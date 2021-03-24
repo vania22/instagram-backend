@@ -9,23 +9,23 @@ import {Comment} from "../entities/Comment";
 export class LikeResolver {
     @Authorized()
     @Mutation(() => Post)
-    async toggleLike(@Arg('id') id: number, @Ctx() {user}: IContext): Promise<Post> {
+    async toggleLike(@Arg('id') id: string, @Ctx() {user}: IContext): Promise<Post> {
         const post = await Post.findOne({id});
         const comment = await Comment.findOne({id})
 
-        if(!comment && post) {
+        if (!comment && post) {
             const existingLike = await Like.findOne({post, user})
 
-            if(existingLike) {
+            if (existingLike) {
                 await existingLike.remove()
             } else {
                 await Like.insert({user, post})
             }
             return post
-        }else if(comment && !post) {
+        } else if (comment && !post) {
             const existingLike = await Like.findOne({comment, user})
 
-            if(existingLike) {
+            if (existingLike) {
                 await existingLike.remove()
             } else {
                 await Like.insert({user, comment})
@@ -37,17 +37,17 @@ export class LikeResolver {
     }
 
     @FieldResolver()
-    async user(@Root() like: Like): Promise<User>{
+    async user(@Root() like: Like): Promise<User> {
         return await User.findOne({id: like.userId}) as User
     }
 
     @FieldResolver()
-    async post(@Root() like: Like): Promise<Post>{
+    async post(@Root() like: Like): Promise<Post> {
         return await Post.findOne({id: like.postId}) as Post;
     }
 
     @FieldResolver()
-    async comment(@Root() like: Like): Promise<Comment>{
+    async comment(@Root() like: Like): Promise<Comment> {
         return await Comment.findOne({id: like.commentId}) as Comment
     }
 }

@@ -15,14 +15,14 @@ export class Post extends BaseEntity {
     user: User;
 
     @Column()
-    userId: number;
+    userId: string;
 
     @Field(() => String)
     @Column()
     @MaxLength(256)
     description: string
 
-    @Field(() => String, {nullable: false, })
+    @Field(() => String, {nullable: false})
     @Column()
     imageUrl: string
 
@@ -36,9 +36,9 @@ export class Post extends BaseEntity {
 
     @Expose()
     @Field(() => Int)
-    likesCount:number
+    likesCount: number
 
     @Expose()
     @Field(() => Int)
-    commentsCount:number
+    commentsCount: number
 }

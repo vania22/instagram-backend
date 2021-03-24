@@ -10,7 +10,7 @@ export class CommentResolver {
     @Authorized()
     @Mutation(() => Post)
     async createComment(
-        @Arg('postId') postId: number,
+        @Arg('postId') postId: string,
         @Arg('text') text: string,
         @Ctx() {user}: IContext): Promise<Post> {
         let post;
@@ -21,12 +21,12 @@ export class CommentResolver {
             throw new Error('Post not found')
         }
 
-       const comment =  await Comment.create({user, post, text});
+        const comment = await Comment.create({user, post, text});
         await comment.save()
         await post.reload()
 
         return {
-            ...post, commentsCount: post.comments.length + 1, comments: [...post.comments, comment]
+            ...post, commentsCount: post.comments.length + 1, comments: [...post.comments, comment],
         } as any
     }
 
@@ -36,7 +36,7 @@ export class CommentResolver {
     }
 
     @FieldResolver()
-    async user(@Root() comment: Comment): Promise<User>{
+    async user(@Root() comment: Comment): Promise<User> {
         return await User.findOne({id: comment.userId}) as User
     }
 

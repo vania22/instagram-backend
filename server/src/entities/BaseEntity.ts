@@ -1,16 +1,15 @@
 import {
     BaseEntity as TypeORMBaseEntity,
-    CreateDateColumn,
-    PrimaryGeneratedColumn,
+    CreateDateColumn, PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
-import {Field, Int, ObjectType} from "type-graphql";
+import {Field, ObjectType} from "type-graphql";
 
 @ObjectType()
-export abstract class BaseEntity extends TypeORMBaseEntity{
-    @Field(() => Int)
-    @PrimaryGeneratedColumn()
-    id: number;
+export abstract class BaseEntity extends TypeORMBaseEntity {
+    @Field(() => String)
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Field(() => Date)
     @CreateDateColumn()

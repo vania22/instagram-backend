@@ -8,7 +8,7 @@ import {Comment} from "./Comment";
 
 @ObjectType('User')
 @Entity()
-export class User extends BaseEntity{
+export class User extends BaseEntity {
     @Field(() => String)
     @Length(3, 36)
     @Column({unique: true})
@@ -31,6 +31,6 @@ export class User extends BaseEntity{
     comments: Comment[]
 
     @Field(() => [Like], {nullable: "items"})
-    @OneToMany(() => Like,like => like.user)
+    @OneToMany(() => Like, like => like.user)
     likes: Like[];
 }

@@ -26,12 +26,15 @@ import {CommentResolver} from "./resolvers/CommentResolver";
     app.use(refreshTokenRouter)
     app.use(express.static('public'))
 
-    const schema = await buildSchema({resolvers: [UserResolver, PostResolver, LikeResolver, CommentResolver], authChecker: isAuthorized});
+    const schema = await buildSchema({
+        resolvers: [UserResolver, PostResolver, LikeResolver, CommentResolver],
+        authChecker: isAuthorized,
+    });
 
     const server = new ApolloServer({
         schema,
         context: ({req, res}): IContext => ({req, res}),
-        uploads: false
+        uploads: false,
     })
 
     server.applyMiddleware({app})

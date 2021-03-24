@@ -14,7 +14,7 @@ export class PostResolver {
     @Authorized()
     @Mutation(() => Post)
     async createPost(
-        @Arg('image',  () => GraphQLUpload!) image: FileUpload,
+        @Arg('image', () => GraphQLUpload!) image: FileUpload,
         @Arg('description') description: string,
         @Ctx() {user}: IContext): Promise<Post> {
 
@@ -24,10 +24,9 @@ export class PostResolver {
         try {
             await createReadStream()
                 .pipe(fs.createWriteStream(path.join(__dirname, "../../public/postImages", filenameToSave)))
-        }catch (e) {
+        } catch (e) {
             throw new Error('File is too large, or in inappropriate format')
         }
-
 
         try {
             const post = await Post.create({
@@ -45,7 +44,7 @@ export class PostResolver {
     }
 
     @Query(() => Post)
-    async getPostById(@Arg('postId') postId: number): Promise<Post> {
+    async getPostById(@Arg('postId') postId: string): Promise<Post> {
         const post = await Post.findOne({id: postId})
         if (!post) throw new Error('Post has been deleted')
         return post
@@ -67,14 +66,14 @@ export class PostResolver {
     }
 
     @FieldResolver()
-    async likesCount(@Root()post: Post):Promise<number> {
-        const [_, likesCount] =  await Like.findAndCount({post})
+    async likesCount(@Root()post: Post): Promise<number> {
+        const [_, likesCount] = await Like.findAndCount({post})
         return likesCount
     }
 
     @FieldResolver()
-    async commentsCount(@Root()post: Post):Promise<number> {
-        const [_, commentsCount] =  await Comment.findAndCount({post})
+    async commentsCount(@Root()post: Post): Promise<number> {
+        const [_, commentsCount] = await Comment.findAndCount({post})
         return commentsCount
     }
 }
