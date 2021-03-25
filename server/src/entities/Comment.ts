@@ -27,7 +27,7 @@ export class Comment extends BaseEntity {
     likes: Like[]
 
     @Field(() => Post)
-    @ManyToOne(() => Post, post => post.comments)
+    @ManyToOne(() => Post, post => post.comments,{onDelete: 'CASCADE'})
     post: Post
 
     @Column()
