@@ -1,7 +1,7 @@
 import {Arg, Authorized, Ctx, Field, FieldResolver, Mutation, ObjectType, Query, Resolver, Root} from "type-graphql";
 import {User} from "../entities/User";
 import {IContext} from "../interfaces/IContext";
-import {login, registrate} from "../services/UserResolverServices";
+import {_getUserById, _login, _register} from "../services/UserResolverService";
 import {Post} from "../entities/Post";
 import {Comment} from "../entities/Comment";
 import {Like} from "../entities/Like";
@@ -23,12 +23,12 @@ export class UserResolver {
         @Arg("email") email: string,
         @Arg("password") password: string,
     ): Promise<boolean> {
-        return await registrate(email, password, username);
+        return await _register(email, password, username);
     }
 
     @Mutation(() => LoginResponse)
     async login(@Ctx() {res}: IContext, @Arg('username') username: string, @Arg('password') password: string): Promise<LoginResponse> {
-        return await login(username, password, res)
+        return await _login(username, password, res)
     }
 
     @Authorized()
@@ -36,6 +36,11 @@ export class UserResolver {
     async me(@Ctx() {user}: IContext): Promise<User> {
         if (!user) throw new Error('User not found')
         return user
+    }
+
+    @Query(() => User)
+    async getUserById(@Arg('userId') userId: string): Promise<User> {
+        return await _getUserById(userId)
     }
 
     @FieldResolver()

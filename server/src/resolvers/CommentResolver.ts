@@ -4,6 +4,7 @@ import {Post} from "../entities/Post";
 import {Comment} from "../entities/Comment";
 import {Like} from "../entities/Like";
 import {User} from "../entities/User";
+import {_createComment, _deleteComment} from "../services/CommentResolverService";
 
 @Resolver(Comment)
 export class CommentResolver {
@@ -13,21 +14,15 @@ export class CommentResolver {
         @Arg('postId') postId: string,
         @Arg('text') text: string,
         @Ctx() {user}: IContext): Promise<Post> {
-        let post;
-        try {
-            post = await Post.findOneOrFail({id: postId}, {relations: ['comments', 'comments.user']})
-        } catch (e) {
-            console.log(e)
-            throw new Error('Post not found')
-        }
+        return await _createComment(text, postId, user!)
+    }
 
-        const comment = await Comment.create({user, post, text});
-        await comment.save()
-        await post.reload()
-
-        return {
-            ...post, commentsCount: post.comments.length + 1, comments: [...post.comments, comment],
-        } as any
+    @Authorized()
+    @Mutation(() => Post)
+    async deleteComment(
+        @Arg('commentId') commentId: string,
+        @Ctx() {user}: IContext): Promise<Post> {
+        return await _deleteComment(commentId, user!)
     }
 
     @FieldResolver()

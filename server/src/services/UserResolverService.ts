@@ -4,7 +4,7 @@ import {User} from "../entities/User";
 import {LoginResponse} from "../resolvers/UserResolver";
 import {addRefreshTokenToCookie, newAccessToken} from "./TokenServices";
 
-export const registrate = async (email: string, password: string, username: string): Promise<boolean> => {
+export const _register = async (email: string, password: string, username: string): Promise<boolean> => {
     const usedEmail = await User.findOne({email})
     const usedUsername = await User.findOne({username})
 
@@ -30,7 +30,7 @@ export const registrate = async (email: string, password: string, username: stri
     }
 }
 
-export const login = async (username: string, password: string, res: Response): Promise<LoginResponse> => {
+export const _login = async (username: string, password: string, res: Response): Promise<LoginResponse> => {
     const user = await User.findOne({username})
 
     if (!user) {
@@ -47,5 +47,13 @@ export const login = async (username: string, password: string, res: Response): 
 
     return {
         accessToken: newAccessToken(user), user,
+    }
+}
+
+export const _getUserById = async (userId: string): Promise<User> => {
+    try {
+        return User.findOneOrFail({id: userId})
+    } catch (e) {
+        throw new Error('User not found')
     }
 }

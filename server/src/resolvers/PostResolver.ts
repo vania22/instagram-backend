@@ -16,7 +16,7 @@ export class PostResolver {
         @Arg('image', () => GraphQLUpload!) image: FileUpload,
         @Arg('description') description: string,
         @Ctx() {user}: IContext): Promise<Post> {
-       return _createPost(image, description, user!)
+        return _createPost(image, description, user!)
     }
 
     @Query(() => Post)
