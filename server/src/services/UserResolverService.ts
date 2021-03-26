@@ -57,3 +57,25 @@ export const _getUserById = async (userId: string): Promise<User> => {
         throw new Error('User not found')
     }
 }
+
+export const _followUser = async (userId: string, user:User): Promise<User> => {
+    try {
+        const userToFollow = await User.findOneOrFail({id: userId}, {relations: ['followers']})
+        userToFollow.followers.push(user!)
+        await userToFollow?.save()
+        return user!
+    } catch (e) {
+        throw new Error('User not found')
+    }
+}
+
+export const _unfollowUser = async (userId: string, user:User): Promise<User> => {
+    try {
+        const userToUnfollow = await User.findOneOrFail({id: userId}, {relations: ['followers']})
+        userToUnfollow.followers = userToUnfollow.followers.filter(u => u.id !== user!.id)
+        await userToUnfollow.save()
+        return user!
+    }catch (e) {
+        throw new Error('User not found')
+    }
+}

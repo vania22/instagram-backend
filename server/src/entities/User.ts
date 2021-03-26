@@ -1,5 +1,5 @@
-import {Entity, Column, OneToMany} from "typeorm";
-import {Field, ObjectType} from "type-graphql";
+import {Entity, Column, OneToMany, ManyToMany, JoinTable} from "typeorm";
+import {Field, Int, ObjectType} from "type-graphql";
 import {IsEmail, Length} from "class-validator";
 import {BaseEntity} from "./BaseEntity";
 import {Post} from "./Post";
@@ -33,4 +33,19 @@ export class User extends BaseEntity {
     @Field(() => [Like], {nullable: "items"})
     @OneToMany(() => Like, like => like.user)
     likes: Like[];
+
+    @Field(() => [User])
+    @ManyToMany(() => User, user => user.following)
+    @JoinTable()
+    followers: User[];
+
+    @Field(() => [User])
+    @ManyToMany(() => User, user => user.followers)
+    following: User[];
+
+    @Field(() => Int)
+    followersCount: number
+
+    @Field(() => Int)
+    followingCount: number
 }
