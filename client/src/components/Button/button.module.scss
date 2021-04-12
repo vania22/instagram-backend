@@ -1,0 +1,16 @@
+@import "src/styles/variables";
+
+.button {
+  width: 100%;
+  padding: 8px 0;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: $buttonBlue;
+  color: $textWhite;
+  font-weight: 600;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

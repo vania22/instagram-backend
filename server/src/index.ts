@@ -17,10 +17,12 @@ import {CommentResolver} from "./resolvers/CommentResolver";
 
 (async () => {
     const app = express();
+    app.use(cors({origin: 'http://localhost:3000', credentials: true}))
+
     await createConnection();
     console.log('Connected to DB')
 
-    app.use(cors({origin: 'http://localhost:3000', credentials: true}))
+
     app.use(cookieParser())
     app.use(graphqlUploadExpress({maxFileSize: 3000000, maxFiles: 1}))
     app.use(refreshTokenRouter)
@@ -37,7 +39,7 @@ import {CommentResolver} from "./resolvers/CommentResolver";
         uploads: false,
     })
 
-    server.applyMiddleware({app})
+    server.applyMiddleware({app, cors: false})
 
     await app.listen(process.env.PORT)
     console.log('Server Started')

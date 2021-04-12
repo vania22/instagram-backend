@@ -1,0 +1,132 @@
+@import "../../styles/variables";
+
+.centered_container {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.login_screen_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 90%;
+  max-width: 830px;
+}
+
+.left_side {
+  height: 618px;
+  width: 454px;
+  background-image: url("/images/phones.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+
+  .inner_phone_image {
+    position: absolute;
+    top: 16.2%;
+    left: 33.2%;
+  }
+
+  @media only screen and (max-width: 876px) {
+    display: none;
+  }
+}
+
+.right_side {
+  height: 618px;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 60px;
+
+  @media only screen and (max-width: 876px) {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 576px) {
+    width: 80%;
+  }
+}
+
+.login_box {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 50px;
+  border: 1px solid $borderDark;
+  background-color: $backgroundLite;
+
+  img {
+    width: 180px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  form {
+    width: 100%;
+    height: 100%;
+  }
+
+  .login_button {
+    margin-top: 30px;
+  }
+
+  .error {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: $textError;
+  }
+
+  .forgot_password {
+    color: $textDarkBlue;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  @media only screen and (max-width: 476px) {
+    padding: 30px 20px;
+  }
+}
+
+.secondary_box {
+  height: 13%;
+  border: 1px solid $borderDark;
+  background-color: $backgroundLite;
+  margin-top: 15px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: $textBlack;
+  a {
+    font-weight: 600;
+    color: $textLightBlue;
+  }
+}
+
+.appstore_box {
+  height: 15%;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items:  center;
+
+  p {
+    margin-bottom: 15px;
+  }
+
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  img {
+    cursor: pointer;
+    margin: 0 10px;
+    height: 40px;
+  }
+}
