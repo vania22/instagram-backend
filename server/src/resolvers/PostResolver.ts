@@ -6,7 +6,13 @@ import {Post} from "../entities/Post";
 import {Comment} from "../entities/Comment";
 import {Like} from "../entities/Like";
 import {User} from "../entities/User";
-import {_createPost, _deletePost, _getPostById, _updatePostDescription} from "../services/PostResolverService";
+import {
+    _createPost,
+    _deletePost,
+    _getFeaturedPosts,
+    _getPostById,
+    _updatePostDescription,
+} from "../services/PostResolverService";
 
 
 @Resolver(Post)
@@ -25,10 +31,11 @@ export class PostResolver {
         return _getPostById(postId)
     }
 
-    // @Authorized()
-    // @Query(() => [Post])
-    // async getFeaturedPosts(@Ctx() {user}: IContext): Promise<any> {
-    // }
+    @Authorized()
+    @Query(() => [Post])
+    async getFeaturedPosts(): Promise<any> {
+        return _getFeaturedPosts()
+    }
 
     @Authorized()
     @Mutation(() => Post)

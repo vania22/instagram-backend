@@ -48,3 +48,7 @@ export const _deletePost = async (postId: string, user: User): Promise<Post> => 
     await post.remove()
     return {...post, id: postId} as Post
 }
+
+export const _getFeaturedPosts = async (): Promise<Post[]> => {
+    return await Post.find();
+}

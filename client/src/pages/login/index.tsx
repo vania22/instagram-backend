@@ -46,7 +46,7 @@ const LoginPage = () => {
         <main className={styles.centered_container}>
             <div className={styles.login_screen_container}>
                 <div className={styles.left_side}>
-                    <img src='/images/phone_screen_1.jpg' alt="phone-screen" className={styles.inner_phone_image}/>
+                    <img src='/images/login-page/phone_screen_1.jpg' alt="phone-screen" className={styles.inner_phone_image}/>
                 </div>
                 <div className={styles.right_side}>
                     <div className={styles.login_box}>
@@ -77,8 +77,8 @@ const LoginPage = () => {
                     <div className={styles.appstore_box}>
                         <p>Get the app.</p>
                         <div>
-                            <img src='/images/app_store.png' alt='app store'/>
-                            <img src='/images/play_market.png' alt='play market'/>
+                            <img src='/images/login-page/app_store.png' alt='app store'/>
+                            <img src='/images/login-page/play_market.png' alt='play market'/>
                         </div>
                     </div>
                 </div>

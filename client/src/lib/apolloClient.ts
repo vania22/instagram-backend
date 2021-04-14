@@ -5,16 +5,28 @@ import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import jwtDecode from "jwt-decode";
 import {getAccessToken, setAccessToken} from "../utils/accessToken";
+import {setContext} from "@apollo/client/link/context";
+
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: any;
 
+const authLink = setContext((_, {headers}) => {
+    const token = getAccessToken()
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : "",
+        },
+    }
+});
+
 const httpLink = new HttpLink({
     uri: 'http://localhost:5000/graphql',
     credentials: 'include',
     headers: {
-        Authentication: `Bearer ${getAccessToken()}`,
+        authorization: `Bearer ${getAccessToken()}`,
     },
 });
 
@@ -27,19 +39,19 @@ const tokenRefreshLink = new TokenRefreshLink({
         setAccessToken(token)
     },
     handleError: () => {
-      setAccessToken('')
+        setAccessToken('')
     },
     isTokenValidOrUndefined: (): boolean => {
         const token = getAccessToken();
-        if(!token) return true
+        if (!token) return true
 
         try {
             const {exp}: any = jwtDecode(token)
             return Date.now() < exp;
-        }catch (e) {
+        } catch (e) {
             return false
         }
-    }
+    },
 })
 
 function createApolloClient() {
@@ -47,9 +59,13 @@ function createApolloClient() {
         ssrMode: typeof window === 'undefined',
         link: from([
             tokenRefreshLink,
+            authLink,
             httpLink,
         ]),
         cache: new InMemoryCache(),
+        headers: {
+            authorization: `Bearer ${getAccessToken()}`,
+        },
     })
 }
 

@@ -2,12 +2,15 @@ import type { AppProps } from 'next/app'
 import '../styles/global.scss';
 import {ApolloProvider} from "@apollo/client";
 import {useApollo} from "../lib/apolloClient";
+import AppWrapper from "../AppWrapper";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const apolloClient = useApollo(pageProps);
     return (
         <ApolloProvider client={apolloClient}>
-            <Component {...pageProps} />
+            <AppWrapper>
+                <Component {...pageProps} />
+            </AppWrapper>
         </ApolloProvider>
     )
 }

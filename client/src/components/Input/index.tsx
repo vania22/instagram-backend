@@ -1,7 +1,7 @@
 import styles from './input.module.scss';
 
 interface Props {
-    register: any;
+    register?: any;
     value?: string;
     onChange?(value: string): void;
     type?: string;
@@ -13,7 +13,7 @@ interface Props {
 
 const Input = ({value, onChange, name, register, type = 'text', placeholder, className, error}: Props) => {
     return (
-        <div className={styles.input_container}>
+        <>
             {onChange ?
                 <input
                     type={type}
@@ -34,7 +34,7 @@ const Input = ({value, onChange, name, register, type = 'text', placeholder, cla
                 />
             }
             {error && <small className={styles.error}>{error}</small>}
-        </div>
+        </>
     )
 }
 

@@ -1,12 +1,8 @@
 @import "./src/styles/variables";
 
-.input_container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
 .input {
+  margin: 5px 0;
+  width: 100%;
   padding: 8px;
   background-color: $backgroundDark;
   border: 1px solid $borderDark;
